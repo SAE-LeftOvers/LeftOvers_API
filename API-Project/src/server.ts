@@ -1,5 +1,6 @@
 import express from "express";
 import { IngredientsController } from "./controllers/ingredients.controller"
+import { RecipesController } from "./controllers/recipes.controller";
 
 const app = express();
 
@@ -8,6 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/ingredients', IngredientsController);
+app.use('/recipes', RecipesController);
 
 const port  = process.env.PORT || 3000;
 
