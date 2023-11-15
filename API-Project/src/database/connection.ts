@@ -3,6 +3,6 @@ export const pool = new Pool({
   user: 'rgregnault',
   host: 'localhost',
   database: 'leftovers',
-  password: 'Cl@ssicP@ssw0rd',
+  password: 'motdepasse',
   port: 5432,
 })

@@ -3,19 +3,20 @@ import { Router } from "express";
 import { Exceptions } from "../utils/exception";
 import { IIngredient } from "../types/ingredients";
 import { pool } from "../database/connection";
-import { queryResult } from "pg-promise";
+import { QueryResult } from "pg";
 
 
 const IngredientsController = Router()
 
 /** To get all ingredients */
 IngredientsController.get('/', (req, res) => {
-    pool.query('SELECT * FROM Ingredients ORDER BY id', (error: Error, results: queryResult) => {
+    pool.query({text:'SELECT * FROM Ingredients ORDER BY id'}, (error: Error, results: QueryResult) => {
         if (error) {
             throw(error)
         }
+
         res.status(200);
-        res.send("Liste des ingredients").json(results);
+        res.json(results.rows);
     })
 
     return res;
@@ -29,8 +30,19 @@ IngredientsController.get('/:id', (req, res) => {
         throw new Exceptions.BadRequestException('id invalid !');
     }
 
-    res.send(`Searching for ingredient with id = ${id}...`);
-    res.status(200);
+    pool.query({text:'SELECT * FROM Ingredients WHERE id =$1',
+                values: [id]}, (error: Error, results: QueryResult) => {
+        if (error) {
+            throw(error)
+        }
+        
+        if (results.rowCount == 0) {
+            throw new Exceptions.NotFoundException('no ingredient with this id');
+        }
+        
+        res.status(200)
+        res.json(results.rows)
+    })
 
     return res;
 })
