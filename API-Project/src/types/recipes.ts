@@ -1,10 +1,10 @@
-import type { Ingredient } from "./ingredients"
+import type { IIngredient } from "./ingredients"
 
-export interface Recipe {
+export interface IRecipe {
     id: number,
     name: string,
     description: string,
     time_to_cook: number,
-    ingredients: Ingredient[],
+    ingredients: IIngredient[],
     steps: string[]
 }
