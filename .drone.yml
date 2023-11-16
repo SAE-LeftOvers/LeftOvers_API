@@ -1,0 +1,63 @@
+kind: pipeline
+type: docker
+name: LeftOvers_Api
+
+trigger:
+  event:
+    - push
+
+steps:
+  - name: api-build
+    image: node:latest
+    commands:
+      - cd ./API-Project
+      - npm install
+      - npm run build
+
+  - name: test
+    image: node:latest
+    commands:
+      - cd ./API-Project
+      - npm run test
+    depends_on: [ api-build ]
+
+  - name: docker-build-and-push
+    image: plugins/docker
+    settings:
+      dockerfile: API-Project/Dockerfile
+      context: API-Project
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/rayhan.hassou/leftovers_api
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+      depends_on: [ api-build ]
+
+  #container deployment
+  - name: deploy-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+        IMAGENAME: hub.codefirst.iut.uca.fr/rathan.hassou/leftovers_api:latest
+        CONTAINERNAME: left-over-container
+        COMMAND: create
+        OVERWRITE: true
+        ADMINS: louison.parant,remi.regnault,rayhan.hassou
+    depends_on: [ docker-build-and-push ]
+
+  - name: code-analysis
+    image: node:latest
+    environment:
+      SONAR_TOKEN:
+        from_secret: SONAR_TOKEN
+    settings:
+      sources: ./API-Project
+    commands:
+      - export SONAR_SCANNER_VERSION=4.7.0.2747
+      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      - export SONAR_SCANNER_OPTS="-server"
+      - sonar-scanner -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar
+    depends_on: [ api-build ]
