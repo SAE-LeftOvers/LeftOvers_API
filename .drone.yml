@@ -12,6 +12,7 @@ steps:
     commands:
       - cd ./API-Project
       - npm install
+      - npm run build
       - npm run start
 
   - name: test
