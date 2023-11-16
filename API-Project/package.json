@@ -7,7 +7,7 @@
     "start": "node dist/server.js",
     "build": "tsup src/server.ts --format cjs --clean",
     "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node src/server.ts\"",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
     },
   "author": "",
   "license": "ISC",
