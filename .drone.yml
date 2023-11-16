@@ -27,7 +27,7 @@ steps:
       dockerfile: API-Project/Dockerfile
       context: API-Project
       registry: hub.codefirst.iut.uca.fr
-      repo: hub.codefirst.iut.uca.fr/rathan.hassou/leftovers_api
+      repo: hub.codefirst.iut.uca.fr/rayhan.hassou/leftovers_api
       username:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
