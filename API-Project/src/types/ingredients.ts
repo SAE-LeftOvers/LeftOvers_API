@@ -1,9 +1,14 @@
-export class Ingredient {
+export interface IIngredient {
     readonly id: number;
     readonly name: string;
+}
 
-    constructor(init_id: number, init_name: string) {
-        this.id = init_id;
-        this.name = init_name;
+export class Ingredient implements IIngredient {
+    id: number;
+    name: string;
+
+    constructor (id: number, name: string) {
+        this.id = id
+        this.name = name
     }
 }
