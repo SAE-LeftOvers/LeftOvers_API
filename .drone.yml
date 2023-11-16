@@ -49,7 +49,7 @@ steps:
     image: node:latest
     environment:
       SONAR_TOKEN:
-        from_secret: SONAR_TOKEN_API
+        from_secret: SONAR_TOKEN
     settings:
       sources: ./API-Project
     commands:
