@@ -1,4 +1,3 @@
-import { QueryResult } from "pg";
 import { Ingredient } from "../types/ingredients";
 import { Connection } from "../database/connection"
 
