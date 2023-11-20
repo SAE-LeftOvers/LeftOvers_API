@@ -23,7 +23,7 @@ export class IngredientsGateway {
         return ingredients
     }
 
-    async findOneById(id: number) : Promise<any> {
+    async findOneById(id: number) : Promise<Ingredient | null> {
         this.connection.connect()
 
         const query = {

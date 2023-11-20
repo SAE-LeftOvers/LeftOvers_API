@@ -1,11 +1,6 @@
-import { Request, Response, NextFunction } from "express";
 import { Router } from "express";
-import { pool } from "../database/connection";
-import { Query, QueryResult } from "pg";
-import { IRecipe, Recipe } from "../types/recipes";
+import { Recipe } from "../types/recipes";
 import { Exceptions } from "../utils/exception";
-import { IngredientsController } from "./ingredients.controller";
-import { IIngredient } from "../types/ingredients";
 import { RecipeGateway } from "../gateways/recipe.gateway";
 
 
