@@ -41,4 +41,30 @@ export class IngredientsGateway {
 
         return ingredient
     }
+
+    async findIngredientsForRecipe(id: Number): Promise<any> {
+        this.connection.connect();
+    
+        const query = {
+            text: 'SELECT i.name, i.id FROM Ingredients i, Composed c WHERE c.idRecipe =$1 AND i.id = c.idIngredient',
+            values: [id],
+        };
+    
+        const res = await this.connection.client.query(query);
+        console.log(res)
+    
+        if (res.rowCount === 0) {
+            return null;
+        }
+
+    
+        const ingredients = res.rows.map(row => ({
+            name: row.name,
+            id: Number(row.id), // Conversion de l'identifiant en nombre
+        }));
+        console.log(ingredients);
+    
+        return ingredients as Ingredient[];
+    }
+
 }
