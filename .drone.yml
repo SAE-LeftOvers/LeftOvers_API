@@ -38,7 +38,7 @@ steps:
   - name: deploy-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
-        IMAGENAME: hub.codefirst.iut.uca.fr/rathan.hassou/leftovers_api:latest
+        IMAGENAME: hub.codefirst.iut.uca.fr/rayhan.hassou/leftovers_api:latest
         CONTAINERNAME: left-over-container
         COMMAND: create
         OVERWRITE: true
