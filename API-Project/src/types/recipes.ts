@@ -17,13 +17,13 @@ export class Recipe implements IRecipe {
     ingredients: IIngredient[]
     steps: string[]
 
-    constructor(id: number, name: string, description: string, time_to_cook: number) {
+    constructor(id: number, name: string, description: string, time_to_cook: number, steps: string[]) {
         this.id = id
         this.name = name
         this.description = description
         this.time_to_cook = time_to_cook
         this.ingredients = []
-        this.steps = []
+        this.steps = steps;
     }
 
     addStep(newStep: string) {
