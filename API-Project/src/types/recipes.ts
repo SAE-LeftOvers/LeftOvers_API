@@ -1,4 +1,4 @@
-import type { IIngredient } from "./ingredients"
+import type { IIngredient, Ingredient } from "./ingredients"
 
 export interface IRecipe {
     readonly id: number,
@@ -17,13 +17,13 @@ export class Recipe implements IRecipe {
     ingredients: IIngredient[]
     steps: string[]
 
-    constructor(id: number, name: string, description: string, time_to_cook: number, steps: string[]) {
+    constructor(id: number, name: string, description: string, time_to_cook: number, steps: string[], ingredients: Ingredient[]) {
         this.id = id
         this.name = name
         this.description = description
         this.time_to_cook = time_to_cook
-        this.ingredients = []
-        this.steps = steps;
+        this.ingredients = ingredients
+        this.steps = steps
     }
 
     addStep(newStep: string) {

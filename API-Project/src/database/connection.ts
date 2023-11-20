@@ -17,10 +17,10 @@ export class Connection {
 
   constructor() {
     this.client = new Client({
-      user: 'leftovers_admin',
+      user: 'leftovers_appuser',
       host: 'postgresql-leftovers.alwaysdata.net',
       database: 'leftovers_recipedb',
-      password: 'AdmPsswd',
+      password: 'UsrPsswd',
       port: 5432,
     })
   }

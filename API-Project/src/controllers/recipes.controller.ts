@@ -34,7 +34,6 @@ RecipesController.get('/:id', async (req, res) => {
         }
         else {
             const ingredient_ingredient = recipe as Recipe
-
             res.status(200).json(recipe)
         }
     } catch (error) {
