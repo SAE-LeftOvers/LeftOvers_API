@@ -1,9 +1,6 @@
-import { Request, Response, NextFunction } from "express";
 import { Router } from "express";
 import { Exceptions } from "../utils/exception";
-import { IIngredient, Ingredient } from "../types/ingredients";
-import { pool } from "../database/connection";
-import { Query, QueryResult } from "pg";
+import { Ingredient } from "../types/ingredients";
 import { IngredientsGateway } from "../gateways/ingredients.gateway";
 
 

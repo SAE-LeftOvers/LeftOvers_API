@@ -1,4 +1,3 @@
-import { Recipe } from "../types/recipes"
 import { Connection } from "../database/connection"
 
 export class StepsGateway {

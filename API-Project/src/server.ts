@@ -1,4 +1,7 @@
 import express from "express";
+
+require('dotenv').config();
+
 import { IngredientsController } from "./controllers/ingredients.controller";
 import { RecipesController } from "./controllers/recipes.controller";
 import { StepsController } from "./controllers/steps.controller";
