@@ -1,7 +1,5 @@
-import { Ingredient } from "../types/ingredients";
 import { Recipe } from "../types/recipes"
 import { Connection } from "../database/connection"
-import { Router } from "express";
 import { StepsGateway } from "./steps.gateway";
 import { IngredientsGateway } from "./ingredients.gateway";
 
