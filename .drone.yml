@@ -8,15 +8,15 @@ trigger:
 
 environment:
   DB_USERNAME:
-    from_secret: DB_USERNAME
+    from_secret: SECRET_DB_USERNAME
   DB_DBHOST:
-    from_secret: DB_DBHOST
+    from_secret: SECRET_DB_DBHOST
   DB_DBNAME:
-    from_secret: DB_DBNAME
+    from_secret: SECRET_DB_DBNAME
   DB_USERPASSWORD:
-    from_secret: DB_USERPASSWORD
+    from_secret: SECRET_DB_USERPASSWORD
   DB_PORT:
-    from_secret: DB_PORT
+    from_secret: SECRET_DB_PORT
 
 steps:
   - name: api-build
