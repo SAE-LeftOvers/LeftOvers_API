@@ -1,12 +1,11 @@
-import { Client } from "pg"
+import { Pool, PoolClient } from "pg"
 
 
 export class Connection {
-  public client:Client
-  clientIsConnected:boolean = false
+  private pool:Pool
 
   constructor() {
-    this.client = new Client({
+    this.pool = new Pool({
       user: process.env.DB_USERNAME,
       host: process.env.DB_DBHOST,
       database: process.env.DB_DBNAME,
@@ -15,10 +14,7 @@ export class Connection {
     })
   }
 
-  public async connect() {
-    if (!this.clientIsConnected) {
-      await this.client.connect()
-      this.clientIsConnected = true
-    }
+  public async getPoolClient() : Promise<PoolClient> {
+    return await this.pool.connect()
   }
 }

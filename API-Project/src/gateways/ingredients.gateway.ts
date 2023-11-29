@@ -9,9 +9,11 @@ export class IngredientsGateway {
     }
 
     async getAll() : Promise<Ingredient[]> {
-        this.connection.connect()
+        const client = await this.connection.getPoolClient()
 
-        const res = await this.connection.client.query('SELECT * FROM Ingredients ORDER BY id')
+        const res = await client.query('SELECT * FROM Ingredients ORDER BY id')
+
+        client.release()
 
         let ingredients:Ingredient[] = []
 
@@ -24,14 +26,16 @@ export class IngredientsGateway {
     }
 
     async findOneById(id: number) : Promise<Ingredient | null> {
-        this.connection.connect()
+        const client = await this.connection.getPoolClient()
 
         const query = {
             text: 'SELECT * FROM Ingredients WHERE id =$1',
             values: [id],
         }
         
-        const res = await this.connection.client.query(query)
+        const res = await client.query(query)
+
+        client.release()
 
         if (res.rowCount != 1) {
             return null
@@ -43,15 +47,16 @@ export class IngredientsGateway {
     }
 
     async findIngredientsForRecipe(id: number): Promise<any> {
-        this.connection.connect();
+        const client = await this.connection.getPoolClient()
     
         const query = {
             text: 'SELECT i.name, i.id FROM Ingredients i, Composed c WHERE c.idRecipe =$1 AND i.id = c.idIngredient',
             values: [id],
         };
     
-        const res = await this.connection.client.query(query);
-        console.log(res)
+        const res = await client.query(query);
+
+        client.release()
     
         if (res.rowCount === 0) {
             return null;
@@ -62,7 +67,6 @@ export class IngredientsGateway {
             name: row.name,
             id: Number(row.id), // Conversion de l'identifiant en nombre
         }));
-        console.log(ingredients);
     
         return ingredients as Ingredient[];
     }

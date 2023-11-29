@@ -15,8 +15,9 @@ export class RecipeGateway {
     }
 
     async getAll() : Promise<Recipe[]> {
-        this.connection.connect()
-        const res = await this.connection.client.query('SELECT * FROM Recipes ORDER BY id');
+        const client = await this.connection.getPoolClient()
+        const res = await client.query('SELECT * FROM Recipes ORDER BY id');
+        client.release()
         
         const steps: string[] = [];
         let recipes: Recipe[] = []
@@ -28,20 +29,20 @@ export class RecipeGateway {
             recipes.push(recipe);
         }
 
-        console.log(recipes);
-
         return recipes
     }
 
     async getById(id: number) : Promise<Recipe | null>{
-        this.connection.connect()
+        const client = await this.connection.getPoolClient()
 
         const query = {
             text: 'SELECT * FROM Recipes WHERE id =$1',
             values: [id],
         }
 
-        const res = await this.connection.client.query(query)
+        const res = await client.query(query)
+
+        client.release()
 
         if (res.rowCount != 1) {
             return null
