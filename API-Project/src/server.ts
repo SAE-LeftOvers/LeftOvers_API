@@ -6,7 +6,9 @@ import { IngredientsController } from "./controllers/ingredients.controller";
 import { RecipesController } from "./controllers/recipes.controller";
 import { StepsController } from "./controllers/steps.controller";
 
-const app = express();
+let helmet = require("helmet");
+let app = express();
+app.use(helmet.hidePoweredBy());
 
 app.get('/', (req, res) => {
     res.send('Hello from express and typescript !');
