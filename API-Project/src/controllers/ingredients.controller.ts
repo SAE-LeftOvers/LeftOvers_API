@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { Exceptions } from "../utils/exception";
-import { Ingredient } from "../types/ingredients";
 import { IngredientsGateway } from "../gateways/ingredients.gateway";
 
 

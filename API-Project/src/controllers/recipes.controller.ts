@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Recipe } from "../types/recipes";
 import { Exceptions } from "../utils/exception";
 import { RecipeGateway } from "../gateways/recipe.gateway";
 
