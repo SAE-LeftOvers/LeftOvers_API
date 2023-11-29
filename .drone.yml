@@ -6,6 +6,18 @@ trigger:
   event:
     - push
 
+environment:
+  DB_USERNAME:
+    from_secret: DB_USERNAME
+  DB_DBHOST:
+    from_secret: DB_DBHOST
+  DB_DBNAME:
+    from_secret: DB_DBNAME
+  DB_USERPASSWORD:
+    from_secret: DB_USERPASSWORD
+  DB_PORT:
+    from_secret: DB_PORT
+
 steps:
   - name: api-build
     image: node:latest
