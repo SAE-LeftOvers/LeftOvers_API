@@ -42,7 +42,7 @@ export class IngredientsGateway {
         return ingredient
     }
 
-    async findIngredientsForRecipe(id: Number): Promise<any> {
+    async findIngredientsForRecipe(id: number): Promise<any> {
         this.connection.connect();
     
         const query = {

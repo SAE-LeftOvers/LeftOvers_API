@@ -35,8 +35,6 @@ IngredientsController.get('/:id', async (req, res) => {
             res.status(404).send('not found')
         }
         else {
-            const ingredient_ingredient = ingredient as Ingredient
-
             res.status(200).json(ingredient)
         }
     } catch (error) {

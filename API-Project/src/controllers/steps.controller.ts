@@ -21,8 +21,6 @@ StepsController.get('/:id', async (req, res) => {
             res.status(404).send('not found')
         }
         else {
-            const steps_steps = steps as string[]
-
             res.status(200).json(steps)
         }
     } catch (error) {

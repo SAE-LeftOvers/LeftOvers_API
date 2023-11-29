@@ -8,7 +8,7 @@ export class StepsGateway {
     }
 
 
-    async getForRecipes(id: Number): Promise<string[]> {
+    async getForRecipes(id: number): Promise<string[]> {
         this.connection.connect();
     
         const query = {

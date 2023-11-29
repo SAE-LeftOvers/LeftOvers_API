@@ -19,7 +19,7 @@ export class RecipeGateway {
         const res = await this.connection.client.query('SELECT * FROM Recipes ORDER BY id');
         
         const steps: string[] = [];
-        let recipes:Recipe[] = []
+        let recipes: Recipe[] = []
 
         for (let key in res.rows) {
             const steps = await this.steps_gw.getForRecipes(Number(key));
@@ -33,7 +33,7 @@ export class RecipeGateway {
         return recipes
     }
 
-    async getById(id: Number) : Promise<Recipe | null>{
+    async getById(id: number) : Promise<Recipe | null>{
         this.connection.connect()
 
         const query = {
@@ -47,8 +47,8 @@ export class RecipeGateway {
             return null
         }
 
-        const steps = await this.steps_gw.getForRecipes(id)
-        const ingredients = await this.ingredient_gw.findIngredientsForRecipe(id)
+        const steps = await this.steps_gw.getForRecipes(Number(id))
+        const ingredients = await this.ingredient_gw.findIngredientsForRecipe(Number(id))
         const recipe = new Recipe(Number(res.rows[0].id), 
                                         res.rows[0].name,  
                                         res.rows[0].description,  
