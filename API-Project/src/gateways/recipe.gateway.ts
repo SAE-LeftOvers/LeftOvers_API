@@ -55,7 +55,6 @@ export class RecipeGateway {
                                         res.rows[0].description,  
                                         Number(res.rows[0].time), 
                                         steps, ingredients);
-        console.log(ingredients);
 
         return recipe;
     }
