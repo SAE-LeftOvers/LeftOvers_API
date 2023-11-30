@@ -37,7 +37,8 @@
   },
   "jest": {
     "testResultsProcessor": "jest-sonar-reporter",
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "testMatch": ["<rootDir>/tests/**/*.spec.ts"]
   },
   "jestSonar": {
     "reportPath": "./reports",
