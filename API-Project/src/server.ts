@@ -20,6 +20,6 @@ app.use('/steps', StepsController)
 
 const port  = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`App listenning on PORT ${port}`));
+export const server = app.listen(port, () => console.log(`App listenning on PORT ${port}`));
 
 export default app;
