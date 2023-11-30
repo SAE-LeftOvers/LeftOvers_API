@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/server';
+import app, {server} from '../src/server';
 
 describe('GET /api/endpoint', () => {
   it('should return a 200 status code', async () => {
@@ -7,5 +7,7 @@ describe('GET /api/endpoint', () => {
     expect(response.status).toBe(200);
   });
 
-  // Add more test cases as needed
+  // Ecrire d'autres tests ici
+
+  server.close()
 });
