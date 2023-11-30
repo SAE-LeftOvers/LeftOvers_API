@@ -40,7 +40,7 @@ steps:
         from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
-      - npm run test:coverage
+      - npm run test:coverage --outputDirectory=./jest-reports
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
@@ -102,5 +102,5 @@ steps:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.testExecutionReportPaths=./reports/report.test.xml
+      - sonar-scanner -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.testExecutionReportPaths=./API-Project/jest-reports/report.test.xml
     depends_on: [ publish-jest-reports ]
