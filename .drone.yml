@@ -39,9 +39,11 @@ steps:
       DB_PORT:
         from_secret: SECRET_DB_PORT
     commands:
-      - pwd
       - cd ./API-Project
       - npm run test:coverage --outputDirectory=./jest-reports
+      - pwd
+      - ls
+      - ls ./jest-reports
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
