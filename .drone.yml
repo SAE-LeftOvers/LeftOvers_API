@@ -39,6 +39,7 @@ steps:
       DB_PORT:
         from_secret: SECRET_DB_PORT
     commands:
+      - pwd
       - cd ./API-Project
       - npm run test:coverage --outputDirectory=./jest-reports
     depends_on: [ api-build ]
