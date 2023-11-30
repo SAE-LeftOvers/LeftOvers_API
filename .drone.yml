@@ -96,6 +96,8 @@ steps:
     settings:
       sources: ./API-Project/src
       tests: ./API-Project/tests
+      sonar.testExecutionReportPaths: ./API-Project/coverage/sonar-report.xml
+      javascript.lcov.reportPaths: ./API-Project/coverage/lcov.info
     commands:
       - export SONAR_SCANNER_VERSION=4.7.0.2747
       - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
