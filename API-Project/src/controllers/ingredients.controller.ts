@@ -1,7 +1,5 @@
-import { Request, Response, NextFunction } from "express";
 import { Router } from "express";
 import { Exceptions } from "../utils/exception";
-import { IIngredient, Ingredient } from "../types/ingredients";
 import { IngredientsGateway } from "../gateways/ingredients.gateway";
 
 const IngredientsController = Router()
@@ -67,7 +65,6 @@ IngredientsController.get('/:id', async (req, res) => {
             res.status(404).send('not found')
         }
         else {
-            const ingredient_ingredient = ingredient as Ingredient
             res.status(200).json(ingredient)
         }
     } catch (error) {

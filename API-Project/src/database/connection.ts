@@ -1,34 +1,20 @@
-import { Client } from "pg"
-
-const Pool = require('pg').Pool
-
-export const pool = new Pool({
-  user: 'rgregnault',
-  host: 'localhost',
-  database: 'leftovers',
-  password: 'motdepasse',
-  port: 5432,
-})
+import { Pool, PoolClient } from "pg"
 
 
 export class Connection {
-  public client:Client
-  clientIsConnected:boolean = false
+  private pool:Pool
 
   constructor() {
-    this.client = new Client({
-      user: 'leftovers_appuser',
-      host: 'postgresql-leftovers.alwaysdata.net',
-      database: 'leftovers_recipedb',
-      password: 'UsrPsswd',
-      port: 5432,
+    this.pool = new Pool({
+      user: process.env.DB_USERNAME,
+      host: process.env.DB_DBHOST,
+      database: process.env.DB_DBNAME,
+      password: process.env.DB_USERPASSWORD,
+      port: Number(process.env.DB_PORT),
     })
   }
 
-  public async connect() {
-    if (!this.clientIsConnected) {
-      await this.client.connect()
-      this.clientIsConnected = true
-    }
+  public async getPoolClient() : Promise<PoolClient> {
+    return await this.pool.connect()
   }
 }

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Recipe } from "../types/recipes";
 import { Exceptions } from "../utils/exception";
 import { RecipeGateway } from "../gateways/recipe.gateway";
 
@@ -33,7 +32,6 @@ RecipesController.get('/:id', async (req, res) => {
             res.status(404).send('not found')
         }
         else {
-            const ingredient_ingredient = recipe as Recipe
             res.status(200).json(recipe)
         }
     } catch (error) {

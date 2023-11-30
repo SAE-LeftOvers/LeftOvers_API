@@ -9,6 +9,17 @@ trigger:
 steps:
   - name: api-build
     image: node:latest
+    environment:
+      DB_USERNAME:
+        from_secret: SECRET_DB_USERNAME
+      DB_DBHOST:
+        from_secret: SECRET_DB_DBHOST
+      DB_DBNAME:
+        from_secret: SECRET_DB_DBNAME
+      DB_USERPASSWORD:
+        from_secret: SECRET_DB_USERPASSWORD
+      DB_PORT:
+        from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
       - npm install
@@ -16,6 +27,17 @@ steps:
 
   - name: test
     image: node:latest
+    environment:
+      DB_USERNAME:
+        from_secret: SECRET_DB_USERNAME
+      DB_DBHOST:
+        from_secret: SECRET_DB_DBHOST
+      DB_DBNAME:
+        from_secret: SECRET_DB_DBNAME
+      DB_USERPASSWORD:
+        from_secret: SECRET_DB_USERPASSWORD
+      DB_PORT:
+        from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
       - npm run test
@@ -23,6 +45,17 @@ steps:
 
   - name: docker-build-and-push
     image: plugins/docker
+    environment:
+      DB_USERNAME:
+        from_secret: SECRET_DB_USERNAME
+      DB_DBHOST:
+        from_secret: SECRET_DB_DBHOST
+      DB_DBNAME:
+        from_secret: SECRET_DB_DBNAME
+      DB_USERPASSWORD:
+        from_secret: SECRET_DB_USERPASSWORD
+      DB_PORT:
+        from_secret: SECRET_DB_PORT
     settings:
       dockerfile: API-Project/Dockerfile
       context: API-Project
@@ -38,11 +71,21 @@ steps:
   - name: deploy-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
-        IMAGENAME: hub.codefirst.iut.uca.fr/rayhan.hassou/leftovers_api:latest
-        CONTAINERNAME: left-over-container
-        COMMAND: create
-        OVERWRITE: true
-        ADMINS: louison.parant,remi.regnault,rayhan.hassou
+      IMAGENAME: hub.codefirst.iut.uca.fr/rayhan.hassou/leftovers_api:latest
+      CONTAINERNAME: left-over-container
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: louison.parant,remi.regnault,rayhan.hassou
+      DB_USERNAME:
+        from_secret: SECRET_DB_USERNAME
+      DB_DBHOST:
+        from_secret: SECRET_DB_DBHOST
+      DB_DBNAME:
+        from_secret: SECRET_DB_DBNAME
+      DB_USERPASSWORD:
+        from_secret: SECRET_DB_USERPASSWORD
+      DB_PORT:
+        from_secret: SECRET_DB_PORT
     depends_on: [ docker-build-and-push ]
 
   - name: code-analysis

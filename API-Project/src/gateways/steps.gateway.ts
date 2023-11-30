@@ -1,4 +1,3 @@
-import { Recipe } from "../types/recipes"
 import { Connection } from "../database/connection"
 
 export class StepsGateway {
@@ -9,15 +8,17 @@ export class StepsGateway {
     }
 
 
-    async getForRecipes(id: Number): Promise<string[]> {
-        this.connection.connect();
+    async getForRecipes(id: number): Promise<string[]> {
+        const client = await this.connection.getPoolClient()
     
         const query = {
             text: 'SELECT action FROM Steps WHERE idRecipe = $1 ORDER BY numstep',
             values: [id],
         };
     
-        const res = await this.connection.client.query(query);
+        const res = await client.query(query);
+
+        client.release()
     
         const steps = res.rows.map(row => row.action);
     

@@ -1,7 +1,5 @@
-import { Ingredient } from "../types/ingredients";
 import { Recipe } from "../types/recipes"
 import { Connection } from "../database/connection"
-import { Router } from "express";
 import { StepsGateway } from "./steps.gateway";
 import { IngredientsGateway } from "./ingredients.gateway";
 
@@ -17,11 +15,12 @@ export class RecipeGateway {
     }
 
     async getAll() : Promise<Recipe[]> {
-        this.connection.connect()
-        const res = await this.connection.client.query('SELECT * FROM Recipes ORDER BY id');
+        const client = await this.connection.getPoolClient()
+        const res = await client.query('SELECT * FROM Recipes ORDER BY id');
+        client.release()
         
         const steps: string[] = [];
-        let recipes:Recipe[] = []
+        let recipes: Recipe[] = []
 
         for (let key in res.rows) {
             const steps = await this.steps_gw.getForRecipes(Number(key));
@@ -30,27 +29,27 @@ export class RecipeGateway {
             recipes.push(recipe);
         }
 
-        console.log(recipes);
-
         return recipes
     }
 
-    async getById(id: Number) : Promise<Recipe | null>{
-        this.connection.connect()
+    async getById(id: number) : Promise<Recipe | null>{
+        const client = await this.connection.getPoolClient()
 
         const query = {
             text: 'SELECT * FROM Recipes WHERE id =$1',
             values: [id],
         }
 
-        const res = await this.connection.client.query(query)
+        const res = await client.query(query)
+
+        client.release()
 
         if (res.rowCount != 1) {
             return null
         }
 
-        const steps = await this.steps_gw.getForRecipes(id)
-        const ingredients = await this.ingredient_gw.findIngredientsForRecipe(id)
+        const steps = await this.steps_gw.getForRecipes(Number(id))
+        const ingredients = await this.ingredient_gw.findIngredientsForRecipe(Number(id))
         const recipe = new Recipe(Number(res.rows[0].id), 
                                         res.rows[0].name,  
                                         res.rows[0].description,  
