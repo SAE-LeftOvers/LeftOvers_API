@@ -38,11 +38,10 @@
   "jest": {
     "preset": "ts-jest",
     "testMatch": ["<rootDir>/tests/**/*.spec.ts"],
-    "coverageReporters": ["json", "lcov", "text", "clover"],
-    "coverageDirectory": "./coverage"
+    "testResultsProcessor": "jest-sonar-reporter"
   },
   "jestSonar": {
-    "reportPath": "./reports",
-    "reportFile": "report.test.xml"
+    "reportPath": "./coverage",
+    "reportFile": "sonar-report.test.xml"
   }
 }
