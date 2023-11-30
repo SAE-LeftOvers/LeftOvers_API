@@ -43,6 +43,7 @@ steps:
       - npm run test:coverage
       - mkdir reports
       - cp -r ./coverage/* ./reports
+      - ls -R ./reports
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
