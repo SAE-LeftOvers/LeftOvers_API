@@ -105,5 +105,5 @@ steps:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.testExecutionReportPaths=./API-Project/reports/report.test.xml
+      - sonar-scanner -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.tests=./API-Project/tests -D sonar.testExecutionReportPaths=./API-Project/reports/report.test.xml
     depends_on: [ publish-jest-reports ]
