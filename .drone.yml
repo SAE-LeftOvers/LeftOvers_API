@@ -41,9 +41,7 @@ steps:
     commands:
       - cd ./API-Project
       - npm run test:coverage
-      - pwd
       - ls
-      - ls ./reports
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
