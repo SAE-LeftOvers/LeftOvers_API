@@ -57,7 +57,6 @@ export class IngredientsGateway {
             return null;
         }
 
-    
         const ingredients = res.rows.map(row => ({
             name: row.name,
             id: Number(row.id), // Conversion de l'identifiant en nombre
@@ -66,5 +65,57 @@ export class IngredientsGateway {
     
         return ingredients as Ingredient[];
     }
+
+    async getByLetter(letter: string): Promise<any> {
+        this.connection.connect();
+        
+        const query = {
+            text: 'SELECT * FROM Ingredients i WHERE LOWER(SUBSTRING(i.name, 1, 1)) = $1',
+            values: [letter.toLowerCase()],
+        };
+        
+        const res = await this.connection.client.query(query);
+        console.log(res)
+        
+        if (res.rowCount === 0) {
+            return null;
+        }
+        
+        let ingredients: Ingredient[] = [];
+    
+        for (const row of res.rows) {
+            const ingredient: Ingredient = new Ingredient(Number(row.id), row.name);
+            ingredients.push(ingredient);
+        }
+    
+        return ingredients;
+    }
+
+    async filter(prompt: string): Promise<any> {
+        this.connection.connect();
+        
+        const query = {
+            text: 'SELECT * FROM Ingredients WHERE LOWER(name) LIKE $1',
+            values: [`%${prompt.toLowerCase()}%`],
+        };
+        
+        const res = await this.connection.client.query(query);
+        console.log(res)
+        
+        if (res.rowCount === 0) {
+            return null;
+        }
+        
+        let ingredients: Ingredient[] = [];
+    
+        for (const row of res.rows) {
+            const ingredient: Ingredient = new Ingredient(Number(row.id), row.name);
+            ingredients.push(ingredient);
+        }
+    
+        return ingredients;
+    }
+    
+    
 
 }
