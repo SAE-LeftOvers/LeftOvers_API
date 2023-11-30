@@ -36,18 +36,11 @@
     "ts-jest": "^29.1.1"
   },
   "jest": {
-    "testResultsProcessor": "jest-sonar-reporter",
     "preset": "ts-jest",
-    "testMatch": ["<rootDir>/tests/**/*.spec.ts"],
-    "reporters": [
-      "default",
-      [
-        "jest-sonar-reporter",
-        {
-          "outputDirectory": "./reports",
-          "outputName": "report.test.xml"
-        }
-      ]
-    ]
+    "testMatch": ["<rootDir>/tests/**/*.spec.ts"]
+  },
+  "jestSonar": {
+    "reportPath": "./reports",
+    "reportFile": "report.test.xml"
   }
 }
