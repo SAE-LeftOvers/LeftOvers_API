@@ -51,7 +51,6 @@ IngredientsController.get('/letter/:letter', async (req, res) => {
 
 /** To get one ingredient by id */
 IngredientsController.get('/:id', async (req, res) => {
-    console
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id)) {
