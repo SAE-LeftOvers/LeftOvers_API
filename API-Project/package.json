@@ -37,7 +37,9 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testMatch": ["<rootDir>/tests/**/*.spec.ts"]
+    "testMatch": ["<rootDir>/tests/**/*.spec.ts"],
+    "coverageReporters": ["json", "lcov", "text", "clover"],
+    "coverageDirectory": "./coverage"
   },
   "jestSonar": {
     "reportPath": "./reports",

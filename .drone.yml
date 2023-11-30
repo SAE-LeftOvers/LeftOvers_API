@@ -41,7 +41,8 @@ steps:
     commands:
       - cd ./API-Project
       - npm run test:coverage
-      - ls
+      - mkdir reports
+      - cp -r ./coverage/* ./reports
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
@@ -103,5 +104,5 @@ steps:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -X -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.testExecutionReportPaths=./API-Project/reports/report.test.xml
+      - sonar-scanner -X -D sonar.projectKey=LeftOvers_Api -D sonar.sources=. -D sonar.tests=./API-Project/tests -D sonar.testExecutionReportPaths=./API-Project/reports/report.test.xml
     depends_on: [ publish-jest-reports ]
