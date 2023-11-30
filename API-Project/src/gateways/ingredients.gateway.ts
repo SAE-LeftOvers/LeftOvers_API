@@ -71,15 +71,16 @@ export class IngredientsGateway {
     }
 
     async getByLetter(letter: string): Promise<any> {
-        this.connection.connect();
+        const client = await this.connection.getPoolClient()
         
         const query = {
             text: 'SELECT * FROM Ingredients i WHERE LOWER(SUBSTRING(i.name, 1, 1)) = $1',
             values: [letter.toLowerCase()],
         };
         
-        const res = await this.connection.client.query(query);
-        console.log(res)
+        const res = await client.query(query);
+
+        client.release()
         
         if (res.rowCount === 0) {
             return null;
@@ -96,15 +97,16 @@ export class IngredientsGateway {
     }
 
     async filter(prompt: string): Promise<any> {
-        this.connection.connect();
+        const client = await this.connection.getPoolClient()
         
         const query = {
             text: 'SELECT * FROM Ingredients WHERE LOWER(name) LIKE $1',
             values: [`%${prompt.toLowerCase()}%`],
         };
         
-        const res = await this.connection.client.query(query);
-        console.log(res)
+        const res = await client.query(query);
+
+        client.release()
         
         if (res.rowCount === 0) {
             return null;
