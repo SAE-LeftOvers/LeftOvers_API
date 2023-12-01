@@ -79,7 +79,7 @@ export class RecipeGateway {
 
         client.release()
 
-        for(var key in res.rows) {
+        for(let key in res.rows) {
             const recipe = await this.getById(Number(res.rows[key].idrecipe))
             if (recipe != null) {
                 recipes.push(recipe)
