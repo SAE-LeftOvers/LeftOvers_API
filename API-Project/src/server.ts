@@ -5,7 +5,7 @@ import { IngredientsController } from "./controllers/ingredients.controller";
 import { RecipesController } from "./controllers/recipes.controller";
 import { StepsController } from "./controllers/steps.controller";
 
-
+console.log(process.env.DB_USERNAME);
 
 let helmet = require("helmet");
 const app = express();
