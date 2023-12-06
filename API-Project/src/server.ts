@@ -5,8 +5,6 @@ import { IngredientsController } from "./controllers/ingredients.controller";
 import { RecipesController } from "./controllers/recipes.controller";
 import { StepsController } from "./controllers/steps.controller";
 
-
-
 let helmet = require("helmet");
 const app = express();
 app.use(helmet.hidePoweredBy());

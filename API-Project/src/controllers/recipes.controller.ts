@@ -66,4 +66,26 @@ RecipesController.get('/withingr/:ids', async (req, res) => {
     }
 })
 
+RecipesController.get('/getcommentsdictionary/:id', async (req, res) => {
+    const id: number = Number(req.params.id)
+    if (Number.isNaN(id) || !Number.isInteger(id)) {
+        res.status(400).json('The parameter is not an integer')
+    }
+
+    try {
+        const dictionary_comments = await recipes_gw.getCommentsDictionary(id)
+
+        if (dictionary_comments.length == 0) {
+            res.status(404).json('no data found')
+        }
+        else {
+            res.status(200).json(dictionary_comments)
+        }
+    }
+    catch (error) {
+        const error_error = error as Error
+        res.status(500).send(error_error.message)
+    }
+})
+
 export { RecipesController }

@@ -88,4 +88,27 @@ export class RecipeGateway {
 
         return recipes as Recipe[];
     }
+
+    async getCommentsDictionary(id: number): Promise<{[word: string]: number}> {
+        let comments_dictionary: {[word: string]: number} = {}
+
+        const client = await this.connection.getPoolClient()
+
+        const query = {
+            text: 'SELECT comments_dico FROM Recipes WHERE id=$1',
+            values: [id]
+        }
+
+        const res = await client.query(query)
+
+        client.release()
+
+        if (res.rows != null && res.rows.length >= 1 && res.rows[0] != null) {
+            const dictionnary_as_str: string = res.rows[0].comments_dico.replace(/'/g, '"')
+            comments_dictionary = JSON.parse(dictionnary_as_str);
+            console.log(comments_dictionary)
+        }
+        
+        return comments_dictionary
+    }
 }
