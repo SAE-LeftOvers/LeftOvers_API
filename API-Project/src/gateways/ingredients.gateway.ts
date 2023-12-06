@@ -101,7 +101,7 @@ export class IngredientsGateway {
         
         const query = {
             text: `
-                CREATE EXTENSION IF NOT EXISTS pg_trgm; -- Vérifie si l'extension est déjà installée, sinon l'installe
+                CREATE EXTENSION IF NOT EXISTS pg_trgm;
                 SELECT *
                 FROM Ingredients
                 WHERE LOWER(name) LIKE $1
