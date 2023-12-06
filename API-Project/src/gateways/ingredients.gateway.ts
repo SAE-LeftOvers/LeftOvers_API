@@ -100,9 +100,16 @@ export class IngredientsGateway {
         const client = await this.connection.getPoolClient()
         
         const query = {
-            text: 'SELECT * FROM Ingredients WHERE LOWER(name) LIKE $1 ORDER BY name',
-            values: [`%${prompt.toLowerCase()}%`],
+            text: `
+                CREATE EXTENSION IF NOT EXISTS pg_trgm; -- Vérifie si l'extension est déjà installée, sinon l'installe
+                SELECT *
+                FROM Ingredients
+                WHERE LOWER(name) LIKE $1
+                ORDER BY similarity(name, $2) DESC, name ASC;
+            `,
+            values: [`%${prompt.toLowerCase()}%`, prompt.toLowerCase()],
         };
+    
         
         const res = await client.query(query);
 
