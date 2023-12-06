@@ -74,7 +74,7 @@ export class IngredientsGateway {
         const client = await this.connection.getPoolClient()
         
         const query = {
-            text: 'SELECT * FROM Ingredients i WHERE LOWER(SUBSTRING(i.name, 1, 1)) = $1',
+            text: 'SELECT * FROM Ingredients i WHERE LOWER(SUBSTRING(i.name, 1, 1)) = $1 ORDER BY i.name',
             values: [letter.toLowerCase()],
         };
         
@@ -100,7 +100,7 @@ export class IngredientsGateway {
         const client = await this.connection.getPoolClient()
         
         const query = {
-            text: 'SELECT * FROM Ingredients WHERE LOWER(name) LIKE $1',
+            text: 'SELECT * FROM Ingredients WHERE LOWER(name) LIKE $1 ORDER BY name',
             values: [`%${prompt.toLowerCase()}%`],
         };
         

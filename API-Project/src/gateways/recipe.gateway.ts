@@ -29,7 +29,7 @@ export class RecipeGateway {
             recipes.push(recipe);
         }
 
-        return recipes
+        return recipes as Recipe[];
     }
 
     async getById(id: number) : Promise<Recipe | null>{
@@ -86,6 +86,6 @@ export class RecipeGateway {
             }
         }
 
-        return recipes
+        return recipes as Recipe[];
     }
 }
