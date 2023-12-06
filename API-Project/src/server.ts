@@ -8,7 +8,7 @@ import { StepsController } from "./controllers/steps.controller";
 
 
 let helmet = require("helmet");
-let app = express();
+const app = express();
 app.use(helmet.hidePoweredBy());
 
 // Configuration du middleware CORS pour autoriser toutes les origines
@@ -26,4 +26,6 @@ app.use('/steps', StepsController);
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`App listening on PORT ${port}`));
+export const server = app.listen(port, () => console.log(`App listening on PORT ${port}`));
+
+export default app;

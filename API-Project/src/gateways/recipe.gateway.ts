@@ -29,7 +29,7 @@ export class RecipeGateway {
             recipes.push(recipe);
         }
 
-        return recipes
+        return recipes as Recipe[];
     }
 
     async getById(id: number) : Promise<Recipe | null>{
@@ -55,8 +55,37 @@ export class RecipeGateway {
                                         res.rows[0].description,  
                                         Number(res.rows[0].time), 
                                         steps, ingredients);
-        console.log(ingredients);
 
         return recipe;
+    }
+
+    async getIdsRecipesThatContainsIngredients(ids: number[]) : Promise<Recipe[]> {
+        let recipes: Recipe[] = []
+
+        const client = await this.connection.getPoolClient()
+
+        let query_list_text = '($1'
+        for (let count = 1; count < ids.length; count++) {
+            query_list_text = query_list_text + ', $' + String(count+1)
+        }
+        query_list_text = query_list_text + ')'
+        
+        const query = {
+            text: 'SELECT idRecipe FROM Composed GROUP BY idRecipe HAVING COUNT(DISTINCT idIngredient) = COUNT(DISTINCT CASE WHEN idIngredient IN ' + query_list_text + ' THEN idIngredient END)',
+            values: ids
+        }
+
+        const res = await client.query(query)
+
+        client.release()
+
+        for(let key in res.rows) {
+            const recipe = await this.getById(Number(res.rows[key].idrecipe))
+            if (recipe != null) {
+                recipes.push(recipe)
+            }
+        }
+
+        return recipes as Recipe[];
     }
 }

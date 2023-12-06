@@ -40,4 +40,30 @@ RecipesController.get('/:id', async (req, res) => {
     }
 })
 
+RecipesController.get('/withingr/:ids', async (req, res) => {
+    let ids: number[] = [];
+    let raw_ids = String(req.params.ids).split(':')
+    for (let key in raw_ids) {
+        const test = Number(raw_ids[key])
+        if (Number.isNaN(test) || !Number.isInteger(test)) {
+            res.status(400).json('A parameter is not an integer')
+        }
+        ids.push(Number(test))
+    }
+
+    try {
+        const recipes = await recipes_gw.getIdsRecipesThatContainsIngredients(ids)
+
+        if (recipes.length == 0) {
+            res.status(404).json('no data found')
+        } 
+        else {
+            res.status(200).json(recipes)
+        }
+    } catch (error) {
+        const error_error = error as Error
+        res.status(500).send(error_error.message)
+    }
+})
+
 export { RecipesController }
