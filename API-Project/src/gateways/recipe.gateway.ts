@@ -106,9 +106,30 @@ export class RecipeGateway {
         if (res.rows != null && res.rows.length >= 1 && res.rows[0] != null) {
             const dictionnary_as_str: string = res.rows[0].comments_dico.replace(/'/g, '"')
             comments_dictionary = JSON.parse(dictionnary_as_str);
-            console.log(comments_dictionary)
         }
         
         return comments_dictionary
+    }
+
+    async getRatingList(id: number): Promise<number[]> {
+        let rating_list: number[] = []
+
+        const client = await this.connection.getPoolClient()
+
+        const query = {
+            text: 'SELECT rating FROM Recipes WHERE id=$1',
+            values: [id]
+        }
+
+        const res = await client.query(query)
+
+        client.release()
+
+        if (res.rows != null && res.rows.length >= 1 && res.rows[0] != null) {
+            const list_as_str: string = res.rows[0].rating
+            rating_list = JSON.parse(list_as_str);
+        }
+        
+        return rating_list
     }
 }
