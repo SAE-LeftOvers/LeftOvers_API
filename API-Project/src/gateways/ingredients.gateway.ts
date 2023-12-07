@@ -101,11 +101,10 @@ export class IngredientsGateway {
         
         const query = {
             text: `
-                CREATE EXTENSION IF NOT EXISTS pg_trgm;
-                SELECT *
-                FROM Ingredients
-                WHERE LOWER(name) LIKE $1
-                ORDER BY similarity(name, $2) DESC, name ASC;
+            SELECT *
+            FROM Ingredients
+            WHERE LOWER(name) LIKE $1
+            ORDER BY (CASE WHEN name ILIKE $2 THEN 1 ELSE 2 END), name ASC;
             `,
             values: [`%${prompt.toLowerCase()}%`, prompt.toLowerCase()],
         };
