@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Hello from express and typescript!' });
+    res.send({ message: 'Hello from express and typescript!' });
 });
 
 app.use('/ingredients', IngredientsController);

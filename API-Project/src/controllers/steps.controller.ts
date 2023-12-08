@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Exceptions } from "../utils/exception";
 import { StepsGateway } from "../gateways/steps.gateway";
 
 

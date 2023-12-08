@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Exceptions } from "../utils/exception";
 import { IngredientsGateway } from "../gateways/ingredients.gateway";
 
 const IngredientsController = Router()
