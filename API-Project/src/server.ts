@@ -24,6 +24,13 @@ app.use('/steps', StepsController);
 
 const port = process.env.PORT || 3000;
 
-export const server = app.listen(port, () => console.log(`App listening on PORT ${port}`));
+export const startServer = () => {
+  return app.listen(port, () => console.log(`App listening on PORT ${port}`));
+};
+
+// Exécutez le serveur uniquement si le module est le point d'entrée principal
+if (require.main === module) {
+  startServer();
+}
 
 export default app;

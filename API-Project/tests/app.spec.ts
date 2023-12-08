@@ -1,13 +1,23 @@
 import request from 'supertest';
-import app, {server} from '../src/server';
+import app, { startServer } from '../src/server';
+import { Server, IncomingMessage, ServerResponse } from 'http';
 
 describe('GET /api/endpoint', () => {
-  it('should return a 200 status code', async () => {
-    const response = await request(app).get('/');
-    expect(response.status).toBe(200);
-  });
+    let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+    
+    beforeAll(() => {
+        server = startServer();
+    });
 
-  // Ecrire d'autres tests ici
+    afterAll((done) => {
+        server.close(done);
+    });
 
-  server.close()
+    it('should return a 200 status code', async () => {
+        const response = await request(app).get('/');
+        expect(response.status).toBe(200);
+    });
+
+    // Ecrire d'autres tests ici
+
 });

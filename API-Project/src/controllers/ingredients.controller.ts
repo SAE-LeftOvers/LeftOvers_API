@@ -54,7 +54,8 @@ IngredientsController.get('/:id', async (req, res) => {
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id)) {
-        throw new Exceptions.BadRequestException('id invalid !');
+        res.status(400).send('invalid parameter')
+        return
     }
 
     try {
