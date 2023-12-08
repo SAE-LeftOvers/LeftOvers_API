@@ -7,7 +7,7 @@ describe('GET /api/endpoint', () => {
     const port = 3000
     
     beforeAll(() => {
-        server = startServer(3000);
+        server = startServer(port);
     });
 
     afterAll((done) => {

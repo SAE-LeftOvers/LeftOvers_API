@@ -22,7 +22,8 @@ RecipesController.get('/:id', async (req, res) => {
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id)) {
-        throw new Exceptions.BadRequestException('id invalid !');
+        res.status(400).send('invalid parameter or no parameter')
+        return
     }
 
     try {
@@ -46,7 +47,8 @@ RecipesController.get('/withingr/:ids', async (req, res) => {
     for (let key in raw_ids) {
         const test = Number(raw_ids[key])
         if (Number.isNaN(test) || !Number.isInteger(test)) {
-            res.status(400).json('A parameter is not an integer')
+            res.status(400).send('A parameter is not an integer')
+            return
         }
         ids.push(Number(test))
     }
@@ -55,7 +57,7 @@ RecipesController.get('/withingr/:ids', async (req, res) => {
         const recipes = await recipes_gw.getIdsRecipesThatContainsIngredients(ids)
 
         if (recipes.length == 0) {
-            res.status(404).json('no data found')
+            res.status(404).send('no data found')
         } 
         else {
             res.status(200).json(recipes)
@@ -69,14 +71,14 @@ RecipesController.get('/withingr/:ids', async (req, res) => {
 RecipesController.get('/getcommentsdictionary/:id', async (req, res) => {
     const id: number = Number(req.params.id)
     if (Number.isNaN(id) || !Number.isInteger(id)) {
-        res.status(400).json('The parameter is not an integer')
+        res.status(400).send('The parameter is not an integer')
+        return
     }
 
     try {
         const dictionary_comments = await recipes_gw.getCommentsDictionary(id)
-
-        if (dictionary_comments.length == 0) {
-            res.status(404).json('no data found')
+        if (Object.keys(dictionary_comments).length == 0) {
+            res.status(404).send('no data found')
         }
         else {
             res.status(200).json(dictionary_comments)
@@ -91,14 +93,15 @@ RecipesController.get('/getcommentsdictionary/:id', async (req, res) => {
 RecipesController.get('/getratinglist/:id', async (req, res) => {
     const id: number = Number(req.params.id)
     if (Number.isNaN(id) || !Number.isInteger(id)) {
-        res.status(400).json('The parameter is not an integer')
+        res.status(400).send('The parameter is not an integer')
+        return
     }
 
     try {
         const rating_list = await recipes_gw.getRatingList(id)
 
         if (rating_list.length == 0) {
-            res.status(404).json('no data found')
+            res.status(404).send('no data found')
         }
         else {
             res.status(200).json(rating_list)

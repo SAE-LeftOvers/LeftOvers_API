@@ -8,7 +8,7 @@ describe('GET /ingredients', () => {
     const port = 3001
 
     beforeAll(() => {
-        server = startServer(3001);
+        server = startServer(port);
     });
   
     afterAll((done) => {
