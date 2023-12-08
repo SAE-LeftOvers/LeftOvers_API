@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: LeftOvers_Api
+name: CI
 
 trigger:
   event:
@@ -43,6 +43,59 @@ steps:
       - apt-get install traceroute
       - traceroute -p 5432 postgresql-leftovers.alwaysdata.net
     depends_on: [ api-build ]
+
+  - name: code-analysis
+    image: node:latest
+    environment:
+      SONAR_TOKEN:
+        from_secret: SONAR_TOKEN
+    settings:
+      sources: ./API-Project/src
+      tests: ./API-Project/tests
+      sonar.testExecutionReportPaths: ./API-Project/coverage/sonar-report.xml
+      javascript.lcov.reportPaths: ./API-Project/coverage/lcov.info
+    commands:
+      - export SONAR_SCANNER_VERSION=4.7.0.2747
+      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      - export SONAR_SCANNER_OPTS="-server"
+      - sonar-scanner -X -D sonar.projectKey=LeftOvers_Api -D sonar.host.url=https://codefirst.iut.uca.fr/sonar
+    depends_on: [ publish-jest-reports ]
+
+
+---
+
+
+kind: pipeline
+type: docker
+name: CD
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
+
+steps:
+    - name: api-build
+    image: node:latest
+    environment:
+      DB_USERNAME:
+        from_secret: SECRET_DB_USERNAME
+      DB_DBHOST:
+        from_secret: SECRET_DB_DBHOST
+      DB_DBNAME:
+        from_secret: SECRET_DB_DBNAME
+      DB_USERPASSWORD:
+        from_secret: SECRET_DB_USERPASSWORD
+      DB_PORT:
+        from_secret: SECRET_DB_PORT
+    commands:
+      - cd ./API-Project
+      - npm install
+      - npm run build
 
   - name: docker-build-and-push
     image: plugins/docker
@@ -88,23 +141,3 @@ steps:
       DB_PORT:
         from_secret: SECRET_DB_PORT
     depends_on: [ docker-build-and-push ]
-
-  - name: code-analysis
-    image: node:latest
-    environment:
-      SONAR_TOKEN:
-        from_secret: SONAR_TOKEN
-    settings:
-      sources: ./API-Project/src
-      tests: ./API-Project/tests
-      sonar.testExecutionReportPaths: ./API-Project/coverage/sonar-report.xml
-      javascript.lcov.reportPaths: ./API-Project/coverage/lcov.info
-    commands:
-      - export SONAR_SCANNER_VERSION=4.7.0.2747
-      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
-      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
-      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-      - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -X -D sonar.projectKey=LeftOvers_Api -D sonar.host.url=https://codefirst.iut.uca.fr/sonar
-    depends_on: [ publish-jest-reports ]
