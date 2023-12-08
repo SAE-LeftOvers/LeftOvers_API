@@ -28,7 +28,6 @@ export const startServer = (port_to_use: number) => {
   return app.listen(port_to_use, () => console.log(`App listening on PORT ${port}`));
 };
 
-// Exécutez le serveur uniquement si le module est le point d'entrée principal
 if (require.main === module) {
   startServer(port);
 }

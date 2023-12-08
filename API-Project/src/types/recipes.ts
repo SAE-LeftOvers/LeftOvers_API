@@ -25,12 +25,4 @@ export class Recipe implements IRecipe {
         this.ingredients = ingredients
         this.steps = steps
     }
-
-    addStep(newStep: string) {
-        this.steps.push(newStep)
-    }
-
-    addIngredient(newIngredient: IIngredient) {
-        this.ingredients.push(newIngredient)
-    }
 }

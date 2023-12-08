@@ -8,16 +8,17 @@ const steps_gw = new StepsGateway()
 
 
 StepsController.get('/:id', async (req, res) => {
-    const id = String(req.params.id);
+    const id = Number(req.params.id);
 
     if (!Number.isInteger(id)) {
-        throw new Exceptions.BadRequestException('id invalid !');
+        res.status(400).send('invalid parameter or no parameter')
+        return
     }
 
     try {
         const steps = await steps_gw.getForRecipes(Number(id))
 
-        if (steps == null) {
+        if (steps.length == 0) {
             res.status(404).send('not found')
         }
         else {
