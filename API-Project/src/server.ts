@@ -25,7 +25,7 @@ app.use('/steps', StepsController);
 const port = Number(process.env.PORT) || 3000;
 
 export const startServer = (port_to_use: number) => {
-  return app.listen(port_to_use, () => console.log(`App listening on PORT ${port}`));
+  return app.listen(port_to_use, () => console.log(`App listening on PORT ${port_to_use}`));
 };
 
 if (require.main === module) {
