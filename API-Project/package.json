@@ -10,7 +10,7 @@
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "test:CI": "jest --coverage --testTimeout=Infinity"
+    "test:CI": "jest --coverage --testTimeout=120000"
   },
   "author": "",
   "license": "ISC",
