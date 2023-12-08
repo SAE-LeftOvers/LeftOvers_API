@@ -40,9 +40,7 @@ steps:
         from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
-      - apt-get install mtr
-      - ping postgresql-leftovers.alwaysdata.net
-      - telnet postgresql-leftovers.alwaysdata.net 5432
+      - npm run test:coverage
     depends_on: [ api-build ]
 
   - name: code-analysis
