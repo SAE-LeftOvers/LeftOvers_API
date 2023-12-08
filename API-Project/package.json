@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsup src/server.ts --format cjs --clean",
+    "install-build-start": "npm i && npm run build && npm start",
     "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node src/server.ts\"",
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --watchAll",
