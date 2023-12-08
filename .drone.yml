@@ -79,7 +79,7 @@ trigger:
     - push
 
 steps:
-    - name: api-build
+  - name: api-build
     image: node:latest
     environment:
       DB_USERNAME:
