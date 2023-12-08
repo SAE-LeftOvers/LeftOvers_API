@@ -40,8 +40,8 @@ steps:
         from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
-      - apt-get install traceroute
-      - traceroute -p 5432 postgresql-leftovers.alwaysdata.net
+      - ping postgresql-leftovers.alwaysdata.net
+      - telnet postgresql-leftovers.alwaysdata.net 5432
     depends_on: [ api-build ]
 
   - name: code-analysis
