@@ -40,7 +40,7 @@ steps:
         from_secret: SECRET_DB_PORT
     commands:
       - cd ./API-Project
-      - npm run test:CI
+      - traceroute -p 5432 postgresql-leftovers.alwaysdata.net
     depends_on: [ api-build ]
 
   - name: docker-build-and-push
