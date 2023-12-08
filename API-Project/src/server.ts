@@ -22,15 +22,15 @@ app.use('/ingredients', IngredientsController);
 app.use('/recipes', RecipesController);
 app.use('/steps', StepsController);
 
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
 
-export const startServer = () => {
-  return app.listen(port, () => console.log(`App listening on PORT ${port}`));
+export const startServer = (port_to_use: number) => {
+  return app.listen(port_to_use, () => console.log(`App listening on PORT ${port}`));
 };
 
 // Exécutez le serveur uniquement si le module est le point d'entrée principal
 if (require.main === module) {
-  startServer();
+  startServer(port);
 }
 
 export default app;

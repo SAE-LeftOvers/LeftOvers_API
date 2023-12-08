@@ -4,9 +4,10 @@ import { Server, IncomingMessage, ServerResponse } from 'http';
 
 describe('GET /api/endpoint', () => {
     let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+    const port = 3000
     
     beforeAll(() => {
-        server = startServer();
+        server = startServer(3000);
     });
 
     afterAll((done) => {

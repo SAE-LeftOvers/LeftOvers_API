@@ -8,14 +8,15 @@ const ingredient_gw = new IngredientsGateway()
 
 
 IngredientsController.get('/filter/:prompt', async (req, res) => {
-    const letter = req.params.prompt;
+    const prompt = req.params.prompt;
 
-        if (!letter) {
-            throw new Exceptions.BadRequestException('prompt is invalid!');
-        }
+    if (!prompt) {
+        res.status(400).send('invalid parameter or no parameter')
+        return
+    }
 
     try {
-        const ingredient = await ingredient_gw.filter(letter);
+        const ingredient = await ingredient_gw.filter(prompt);
 
         if (ingredient == null) {
             res.status(404).send('Not found');
@@ -31,9 +32,10 @@ IngredientsController.get('/filter/:prompt', async (req, res) => {
 IngredientsController.get('/letter/:letter', async (req, res) => {
     const letter = req.params.letter;
 
-        if (!letter) {
-            throw new Exceptions.BadRequestException('Letter is invalid!');
-        }
+    if (!letter) {
+        res.status(400).send('invalid parameter or no parameter')
+        return
+    }
 
     try {
         const ingredient = await ingredient_gw.getByLetter(letter);
