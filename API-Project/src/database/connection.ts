@@ -1,5 +1,5 @@
 import { Pool, PoolClient } from "pg"
-
+require('dotenv').config();
 
 export class Connection {
   private pool:Pool
