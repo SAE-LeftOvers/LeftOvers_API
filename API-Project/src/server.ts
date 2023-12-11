@@ -4,6 +4,8 @@ import cors from "cors";
 import { IngredientsController } from "./controllers/ingredients.controller";
 import { RecipesController } from "./controllers/recipes.controller";
 import { StepsController } from "./controllers/steps.controller";
+import { IngredientsClassesGateway } from "./gateways/ingredientsClasses.gateway";
+import { IngredientsClassesController } from "./controllers/ingredientsClasses.controller";
 
 let helmet = require("helmet");
 const app = express();
@@ -21,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/ingredients', IngredientsController);
 app.use('/recipes', RecipesController);
 app.use('/steps', StepsController);
+app.use('/class', IngredientsClassesController);
 
 const port = Number(process.env.PORT) || 3000;
 
