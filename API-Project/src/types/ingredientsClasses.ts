@@ -1,4 +1,4 @@
-enum IngredientsClasses {
+export enum IngredientsClasses {
     DairyFree = 'DAIRY_FREE', 
     GlutenFree = 'GLUTEN_FREE', 
     Porcless = 'PORCLESS',
