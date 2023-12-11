@@ -1,3 +1,5 @@
-# LeftOvers_Api
+<div align = center>
 
-L'Api de LeftOvers permet de récupérer des aliments et recettes depuis une base de données.
+![Image de l'application](Images/LeftOvers_Logo.jpg)
+
+</div>
