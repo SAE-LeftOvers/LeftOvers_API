@@ -4,5 +4,5 @@
 
 </div>
 
-**Nom de l’application** : LeftOvers :pizza:
+**Nom de l’application** : LeftOvers_API :pizza:
 </br>
