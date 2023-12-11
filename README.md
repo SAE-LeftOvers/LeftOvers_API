@@ -7,5 +7,5 @@
 **Nom de l’application** : LeftOvers_API :pizza:
 </br>
 
-**Thème de l’application** : Trouver des recettes faisables avec les ingredients à disposition.
+**Thème de l’application** : Permet le lien entre l'application et la base de données 
 </br>
